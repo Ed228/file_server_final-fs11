@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 
@@ -23,7 +24,7 @@ public class FileUploadController {
   private StorageService storageService;
 
   @PostMapping("/uploadFile")
-  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+  public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
 
     if (StringUtils
         .cleanPath(Objects.requireNonNull(file.getOriginalFilename()))
@@ -35,10 +36,14 @@ public class FileUploadController {
 
     String fileName = storageService.save(file);
 
-    return ResponseEntity.ok(ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("media/upload/")
-        .path(fileName)
-        .toUriString());
+    HashMap<String, String> result = new HashMap<>();
+
+    result.put("filePath", ServletUriComponentsBuilder.fromCurrentContextPath()
+            .path("getFile/")
+            .path(fileName)
+            .toUriString());
+
+    return ResponseEntity.ok(result);
 
   }
 

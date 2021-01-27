@@ -1,5 +1,9 @@
 package com.marksemfileserver;
 
+import com.marksemfileserver.config.PathConf;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -19,17 +23,18 @@ import java.util.Objects;
 @Service
 public class StorageService {
 
-  private final Path fileStorageLocation = Paths.get("C:/Users/Eduard/IdeaProjects/file_server_final-fs11/media/upload");
+  @Autowired
+  PathConf pathConf;
 
   public boolean isExist(String filename) {
-    return Files.exists(Paths.get(this.fileStorageLocation + "/" + filename));
+    return Files.exists(Paths.get(this.pathConf.getPath() + "/" + filename));
   }
 
   public String save(MultipartFile file) {
 
     try {
       String originalFileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-      Path targetLocation = fileStorageLocation.resolve(originalFileName);
+      Path targetLocation = this.pathConf.getPath().resolve(originalFileName);
 
       Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
       return originalFileName;
@@ -40,7 +45,7 @@ public class StorageService {
   }
 
   public Resource get(String filename) throws FileNotFoundException {
-    File outPutFile = new File(this.fileStorageLocation + "/" + filename);
+    File outPutFile = new File(this.pathConf.getPath() + "/" + filename);
     return new InputStreamResource(new FileInputStream(outPutFile));
   }
 
