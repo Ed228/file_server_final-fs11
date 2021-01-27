@@ -44,4 +44,11 @@ public class StorageService {
     return new InputStreamResource(new FileInputStream(outPutFile));
   }
 
+  public boolean delete(String filename) throws IOException {
+    if(this.isExist(filename)) {
+      Files.delete(Paths.get(this.fileStorageLocation + "/" + filename));
+      return true;
+    } else return false;
+  }
+
 }
