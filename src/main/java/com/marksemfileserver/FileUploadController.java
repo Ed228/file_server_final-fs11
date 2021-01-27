@@ -3,6 +3,7 @@ package com.marksemfileserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -11,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
@@ -60,6 +60,15 @@ public class FileUploadController {
     } else {
       return ResponseEntity.status(404)
           .body(new InputStreamResource(new ByteArrayInputStream("File not found".getBytes())));
+    }
+  }
+
+  @DeleteMapping("/deleteFile/{filename}")
+  public ResponseEntity<?> deleteFileByName(@PathVariable String filename) throws IOException {
+    if (this.storageService.delete(filename)) {
+      return ResponseEntity.ok().body("{deletedFile: " + filename + "}");
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{deletedFile: not found}");
     }
   }
 
