@@ -8,12 +8,11 @@ import java.nio.file.Paths;
 
 @Configuration
 public class Config {
-    @Value("${group.path}")
-    private String path;
+  @Value("${group.path}")
+  private String path;
 
-    @Bean
-    public PathConf pathConf(){
-        System.out.println(path);
-        return new PathConf(Paths.get(path));
-    }
+  @Bean
+  public PathConf pathConf() {
+    return new PathConf(Paths.get(path));
+  }
 }

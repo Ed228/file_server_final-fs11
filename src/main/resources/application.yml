@@ -1,8 +1,13 @@
 spring:
   servlet:
     multipart:
-      max-file-size: 5MB
+      max-file-size: 100MB
 server:
   port: 8090
 group:
-  path: /servers/files
+  #path: /servers/files
+  path: C:\Users\Eduard\IdeaProjects\file_server_final-fs11\files
+---
+jwt:
+  secret: proselyt4
+  header: Authorization

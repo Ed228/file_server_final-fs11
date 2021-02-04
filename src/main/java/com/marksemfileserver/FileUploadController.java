@@ -66,9 +66,9 @@ public class FileUploadController {
   @DeleteMapping("/deleteFile/{filename}")
   public ResponseEntity<?> deleteFileByName(@PathVariable String filename) throws IOException {
     if (this.storageService.delete(filename)) {
-      return ResponseEntity.ok().body("{deletedFile: " + filename + "}");
+      return ResponseEntity.ok().body("deletedFile: " + filename);
     } else {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{deletedFile: not found}");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("deletedFile: not found");
     }
   }
 

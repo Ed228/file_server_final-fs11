@@ -2,8 +2,6 @@ package com.marksemfileserver;
 
 import com.marksemfileserver.config.PathConf;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -51,9 +49,13 @@ public class StorageService {
 
   public boolean delete(String filename) throws IOException {
     if(this.isExist(filename)) {
-      Files.delete(Paths.get(this.fileStorageLocation + "/" + filename));
+      Files.delete(Paths.get(this.pathConf.getPath() + "/" + filename));
       return true;
     } else return false;
+  }
+
+  public String update (MultipartFile file) {
+    return this.save(file);
   }
 
 }
