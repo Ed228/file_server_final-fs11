@@ -64,12 +64,17 @@ public class FileUploadController {
   }
 
   @DeleteMapping("/deleteFile/{filename}")
-  public ResponseEntity<?> deleteFileByName(@PathVariable String filename) throws IOException {
+  public ResponseEntity<?> deleteFileByName(@PathVariable String filename)  {
     if (this.storageService.delete(filename)) {
       return ResponseEntity.ok().body("deletedFile: " + filename);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("deletedFile: not found");
     }
+  }
+
+  @PutMapping("/updateFile")
+  public ResponseEntity<?> updateFile(@RequestParam("file") MultipartFile file) {
+    return this.uploadFile(file);
   }
 
 }
