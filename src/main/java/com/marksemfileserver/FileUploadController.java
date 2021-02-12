@@ -13,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Objects;
 
 
@@ -36,14 +35,10 @@ public class FileUploadController {
 
     String fileName = storageService.save(file);
 
-    HashMap<String, String> result = new HashMap<>();
-
-    result.put("filePath", ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("getFile/")
-            .path(fileName)
-            .toUriString());
-
-    return ResponseEntity.ok(result);
+    return ResponseEntity.ok(ServletUriComponentsBuilder.fromCurrentContextPath()
+        .path("getFile/")
+        .path(fileName)
+        .toUriString());
 
   }
 
