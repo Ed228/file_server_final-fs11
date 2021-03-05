@@ -5,8 +5,8 @@ spring:
 server:
   port: 8090
 group:
-  path: /servers/files
-  #path: C:\Users\Eduard\IdeaProjects\file_server_final-fs11\files
+  #path: /servers/files
+  path: C:\Users\Eduard\IdeaProjects\file_server_final-fs11\files
 ---
 jwt:
   secret: proselyt4

@@ -63,9 +63,13 @@ public class StorageService {
 
   private String resolveOriginalFileName(String fileName, String extension) {
     String[] filenameParts = fileName.split("__");
-    return Stream.of(filenameParts)
-        .limit(filenameParts.length - 1)
-        .reduce((s1, s2) -> s1 + "__" + s2).get() + "." + extension;
+    System.out.println(filenameParts.length);
+    if(filenameParts.length > 1) {
+      return Stream.of(filenameParts)
+          .limit(filenameParts.length - 1)
+          .reduce((s1, s2) -> s1 + "__" + s2).get() + "." + extension;
+    }
+    return fileName;
   }
 
 }
